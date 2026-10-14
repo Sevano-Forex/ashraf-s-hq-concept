@@ -1,4 +1,6 @@
 # Concept website
 - [x] Build the single-page design with all requested sections and unofficial notice.
-- [x] Connect booking links and verify mobile navigation, accessible labels, keyboard focus and reduced-motion support.
-- [x] Check desktop/mobile appearance and compilation signals; build OK, no runtime errors, no horizontal overflow at tested widths, Setmore opens in a new tab.
+- [ ] Replace generic services with the public Setmore menu, advertised prices and approximate durations.
+- [ ] Keep booking on-page with the existing Setmore system and a failure-only fallback.
+- [ ] Add the exact address, embedded map, contact details, hours and Saturday policy.
+- [ ] Verify desktop/mobile layout, same-page booking, menu details and compilation signals; do not publish.
