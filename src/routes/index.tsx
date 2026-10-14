@@ -1,19 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, Sparkles, Check, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import interior from "@/assets/barber-interior.jpg";
 import tools from "@/assets/barber-tools.jpg";
 
-const bookingUrl = "https://ashrafshqbarbershop.setmore.com/";
+import { BookingEmbed } from "@/components/booking-embed";
+import { businessAddress, mapsUrl, mapEmbedUrl, serviceGroups, openingHours } from "@/lib/barbershop";
 const navigation = [{ label: "Services", id: "services" }, { label: "Why Us", id: "why-us" }, { label: "Gallery / Look", id: "gallery" }, { label: "Location", id: "location" }, { label: "Book", id: "book" }];
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
     { title: "Ashraf’s HQ Barbershop | Northpine — Unofficial Demo" },
-    { name: "description", content: "An unofficial concept for Ashraf’s HQ Barbershop in Northpine Shopping Centre, Cape Town. Explore men's grooming and book through the existing Setmore page." },
+    { name: "description", content: "An unofficial concept for Ashraf’s HQ Barbershop in Northpine Shopping Centre, Cape Town. Browse advertised services, prices, opening hours and on-page Setmore booking." },
     { property: "og:title", content: "Ashraf’s HQ Barbershop | Unofficial Northpine Concept" },
-    { property: "og:description", content: "A speculative barbershop website concept. Not affiliated with Ashraf’s HQ Barbershop. Booking links go to the existing Setmore page." },
+    { property: "og:description", content: "A speculative barbershop website concept. Not affiliated with Ashraf’s HQ Barbershop. Bookings securely managed by existing Setmore system, embedded on this page." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/")({
 });
 
 function BookingButton({ outline = false, label = "Book Now", className = "" }: { outline?: boolean; label?: string; className?: string }) {
-  return <Button asChild variant={outline ? "barberOutline" : "brass"} className={`booking-button ${className}`}><a href={bookingUrl} target="_blank" rel="noopener noreferrer" aria-label={`${label} on Setmore (opens in a new tab)`}>{label}<ArrowUpRight aria-hidden="true" /></a></Button>;
+  return <Button asChild variant={outline ? "barberOutline" : "brass"} className={`booking-button ${className}`}><a href="#book" aria-label={`${label} — go to on-page booking`}>{label}<ArrowUpRight aria-hidden="true" /></a></Button>;
 }
 
 function Index() {
@@ -50,7 +51,7 @@ function Index() {
               <p className="hero-tagline">A fresh cut. A sharper you.</p>
               <p className="hero-description">Your next chapter in men’s grooming.<br />Find your next appointment in Northpine.</p>
               <div className="hero-buttons"><BookingButton label="Book Your Appointment" /><Button variant="barberOutline" asChild className="explore-button"><a href="#services">Explore Services<ArrowDown aria-hidden="true" /></a></Button></div>
-              <p className="booking-note"><CalendarDays size={14} aria-hidden="true" />Easy online booking via Setmore</p>
+              <p className="booking-note"><CalendarDays size={14} aria-hidden="true" />Book here, powered by Setmore</p>
             </div>
             <div className="hero-bottom"><a href="#location"><MapPin size={15} aria-hidden="true" />Northpine Shopping Centre, Cape Town</a><span>Illustrative concept image · not the actual shop</span></div>
           </div>
@@ -60,23 +61,23 @@ function Index() {
 
         <section id="services" className="services section-light">
           <div className="container">
-            <div className="section-heading"><div><p className="eyebrow">THE GROOMING EDIT</p><h2>GOOD STYLE.<br /><span>DOWN TO THE DETAILS.</span></h2></div><div className="section-intro"><p>A clean look starts with the little things. Explore the grooming inspiration below, then find the current service menu on Setmore.</p><a className="text-link" href={bookingUrl} target="_blank" rel="noopener noreferrer">View current services and prices on Setmore<ArrowUpRight size={17} /></a></div></div>
-            <div className="service-grid">
-              {[{ number: "01", icon: Scissors, title: "THE CUT", text: "From a classic shape to a fresh new direction. A look that feels like you." }, { number: "02", icon: Sparkles, title: "THE BEARD", text: "Clean lines. Considered shape. The finishing detail of your everyday look." }, { number: "03", icon: Check, title: "THE FINISH", text: "A little attention to the details. A fresh start for whatever comes next." }].map(({ number, icon: Icon, title, text }) => <article className="service-item" key={number}><div className="service-top"><Icon size={27} strokeWidth={1.3} aria-hidden="true" /><span>{number}</span></div><h3>{title}</h3><p>{text}</p></article>)}
+            <div className="section-heading"><div><p className="eyebrow">THE SERVICE MENU</p><h2>THE CUT.<br /><span>THE DETAILS. THE PRICE.</span></h2></div><div className="section-intro"><p>Advertised prices from the business’s public Setmore service names. All prices are in South African rand; durations are approximate.</p><a className="text-link" href="#book">Choose your service below<ArrowDown size={17} /></a></div></div>
+            <div className="menu-grid">
+              {serviceGroups.map(group => <div className="menu-group" key={group.number}><div className="menu-heading"><h3>{group.title}</h3><span>{group.number}</span></div>{group.note && <p className="menu-group-note">{group.note}</p>}<dl>{group.services.map(service => <div className="menu-row" key={service.name}><dt>{service.name}<span>{service.duration}</span></dt><dd>{service.price}</dd></div>)}</dl></div>)}
             </div>
-            <p className="service-disclaimer">Grooming themes shown for this concept, not a confirmed service list. Check Setmore for available treatments, prices and times.</p>
+            <p className="service-disclaimer">Illustrative publicly listed prices, subject to owner confirmation. Prices above come from service names, not the separate Setmore price field; that field may not reflect the advertised treatment charge. Confirm final charges with the shop before your appointment. House-call pricing varies with distance.</p>
           </div>
         </section>
 
-        <section id="why-us" className="why-section"><div className="container why-grid"><div><p className="eyebrow">KEEP IT SIMPLE. KEEP IT SHARP.</p><h2>YOUR LOOK.<br /><span>YOUR NEXT MOVE.</span></h2><p className="why-intro">Men’s grooming, close to home in Northpine.<br />Your next appointment is just a few clicks away.</p><BookingButton label="Find Your Appointment" /></div><div className="reason-list">{[{ icon: CalendarDays, title: "Booking, without the back-and-forth.", text: "Head to the existing Setmore page to browse services and choose an available appointment." }, { icon: MapPin, title: "Right here in Northpine.", text: "Find Ashraf’s HQ Barbershop at Northpine Shopping Centre, Cape Town." }, { icon: Scissors, title: "A fresh focus on you.", text: "Make time for men’s grooming. Explore the current options and pick what fits your next look." }].map(({ icon: Icon, title, text }) => <div className="reason" key={title}><Icon aria-hidden="true" size={23} strokeWidth={1.4} /><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div></section>
+        <section id="why-us" className="why-section"><div className="container why-grid"><div><p className="eyebrow">IN THEIR OWN WORDS</p><h2>A CUT ABOVE.<br /><span>A WAY OF LIFE.</span></h2><blockquote className="about-quote">“BARBERSHOP IS NOT A HOBBY ITS A LIFESTYLE”<cite>— Ashraf’s HQ Barbershop · Setmore About listing</cite></blockquote><BookingButton label="Find Your Appointment" /></div><div className="reason-list">{[{ icon: CalendarDays, title: "Your booking, right here.", text: "Choose a service and appointment through the existing Setmore booking panel on this page." }, { icon: MapPin, title: "Right here in Northpine.", text: "Shop 5, Northpine Shopping Centre, Central Drive, Cape Town." }, { icon: Scissors, title: "Saturdays are for walk-ins.", text: "No online bookings on Saturdays. Walk-ins welcomed, 07:30–14:00." }].map(({ icon: Icon, title, text }) => <div className="reason" key={title}><Icon aria-hidden="true" size={23} strokeWidth={1.4} /><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div></section>
 
         <section id="gallery" className="gallery-section section-light"><div className="container"><div className="section-heading"><div><p className="eyebrow">THE LOOK & FEEL</p><h2>CLASSIC ROOTS.<br /><span>MODERN ATTITUDE.</span></h2></div><p className="section-intro gallery-note">A visual moodboard for this concept.<br />AI-generated illustrative images, not photographs of the shop or its customers.</p></div><div className="gallery-grid"><figure><img src={interior} loading="lazy" width={1536} height={1024} alt="Fictional barber interior moodboard with a classic leather chair" /><figcaption><span>01 / THE CHAIR</span><span>Concept inspiration</span></figcaption></figure><figure><img src={tools} loading="lazy" width={1024} height={1024} alt="Illustrative still life of scissors, clipper, comb and shaving brush" /><figcaption><span>02 / THE DETAILS</span><span>Concept inspiration</span></figcaption></figure></div></div></section>
 
-        <section id="location" className="location-section"><div className="container location-grid"><div><p className="eyebrow">IN THE NEIGHBOURHOOD</p><h2>FIND US IN<br /><span>NORTHPINE.</span></h2><div className="location-address"><MapPin size={23} aria-hidden="true" /><div><h3>Northpine Shopping Centre</h3><p>Northpine, Cape Town</p></div></div><p className="location-note">For current services, prices and appointment availability, visit the existing booking page.</p><a className="text-link" href="https://www.google.com/maps/search/?api=1&query=Northpine+Shopping+Centre+Cape+Town" target="_blank" rel="noopener noreferrer">Find the shopping centre on Google Maps<ExternalLink size={16} /></a></div><div className="location-art" aria-label="Northpine, Cape Town location design; not a geographical map"><div className="location-lines" aria-hidden="true" /><MapPin size={40} strokeWidth={1.2} /><span>NORTHPINE</span><p>CAPE TOWN, SOUTH AFRICA</p><div className="location-art-bottom">NORTHPINE SHOPPING CENTRE<ArrowUpRight size={20} /></div></div></div></section>
+        <section id="location" className="location-section"><div className="container location-grid"><div><p className="eyebrow">IN THE NEIGHBOURHOOD</p><h2>FIND US IN<br /><span>NORTHPINE.</span></h2><div className="location-address"><MapPin size={23} aria-hidden="true" /><div><h3>Ashraf’s HQ Barbershop</h3><address>Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div></div><p className="location-note">Saturday: no online bookings. Walk-ins welcomed.</p><a className="text-link" href={mapsUrl} target="_blank" rel="noopener noreferrer">Get directions on Google Maps<ExternalLink size={16} /></a></div><iframe className="location-map" src={mapEmbedUrl} title={`Google Maps location: ${businessAddress}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer" /></div></section>
 
-        <section id="book" className="book-section"><div className="container book-inner"><p className="eyebrow">MAKE TIME FOR A FRESH START</p><h2>YOUR NEXT LOOK<br />STARTS HERE.</h2><p>Choose your service. Find your time. Book online.</p><BookingButton label="Book Now on Setmore" /><span className="book-small">Opens the existing public booking page in a new tab.</span></div></section>
+        <section id="book" className="book-section"><div className="container book-inner"><p className="eyebrow">MAKE TIME FOR A FRESH START</p><h2>YOUR NEXT LOOK<br />STARTS HERE.</h2><BookingEmbed /></div></section>
       </main>
-      <footer className="site-footer"><div className="container"><div className="footer-top"><a href="#" className="brand-name">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a><p>Northpine Shopping Centre<br />Cape Town, South Africa</p><a className="footer-book" href={bookingUrl} target="_blank" rel="noopener noreferrer">Book on Setmore<ArrowUpRight size={16} /></a></div><div className="footer-bottom"><p>Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop</p><span>Independent speculative design · No personal data collected</span></div></div></footer>
+      <footer className="site-footer"><div className="container"><div className="footer-top"><div><a href="#" className="brand-name">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a><address className="footer-address">Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div><div className="footer-hours"><h3><Clock size={16} aria-hidden="true" />Operating hours</h3><dl>{openingHours.map(item => <div key={item.days}><dt>{item.days}</dt><dd>{item.hours}</dd></div>)}</dl><p>Saturday: walk-ins welcomed · no online bookings</p></div><div className="footer-contact"><h3>Contact the shop</h3><a href="tel:+27814652086"><Phone size={15} aria-hidden="true" />+27 81 465 2086</a><a href="mailto:ashraf.thebus100@gmail.com"><Mail size={15} aria-hidden="true" />ashraf.thebus100@gmail.com</a><a className="footer-book" href="#book">Book an appointment<ArrowDown size={16} /></a></div></div><div className="footer-bottom"><p>Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop</p><span>Business details: public Setmore listing · Bookings handled by Setmore</span></div></div></footer>
     </div>
   );
 }
