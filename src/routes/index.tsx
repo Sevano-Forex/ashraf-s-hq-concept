@@ -11,7 +11,7 @@ const navigation = [{ label: "Services", id: "services" }, { label: "Why Us", id
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
     { title: "Ashraf’s HQ Barbershop | Northpine — Unofficial Demo" },
-    { name: "description", content: "An unofficial concept for Ashraf’s HQ Barbershop in Northpine Shopping Centre, Cape Town. Browse advertised services, prices, opening hours and on-page Setmore booking." },
+    { name: "description", content: "An unofficial concept for Ashraf’s HQ Barbershop in Northpine Shopping Centre, Cape Town. Browse advertised services, prices, opening hours and direct Setmore booking." },
     { property: "og:title", content: "Ashraf’s HQ Barbershop | Unofficial Northpine Concept" },
     { property: "og:description", content: "A speculative barbershop website concept. Not affiliated with Ashraf’s HQ Barbershop. All appointments are booked securely through Ashraf’s existing Setmore booking page." },
     { property: "og:type", content: "website" },
@@ -69,7 +69,7 @@ function Index() {
       )}
       </header>
 
-      <main id="main">
+       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
           <img className="hero-image" src={interior} width={1536} height={1024} alt="Illustrative concept interior with a leather barber chair and brass details; not the actual shop" fetchPriority="high" />
           <div className="hero-shade" />
@@ -98,7 +98,40 @@ function Index() {
           </div>
         </section>
 
-        <section id="why-us" className="why-section"><div className="container why-grid"><div><p className="eyebrow">IN THEIR OWN WORDS</p><h2>A CUT ABOVE.<br /><span>A WAY OF LIFE.</span></h2><blockquote className="about-quote">“BARBERSHOP IS NOT A HOBBY ITS A LIFESTYLE”<cite>— Ashraf’s HQ Barbershop · Setmore About listing</cite></blockquote><BookingButton label="Find Your Appointment" /></div><div className="reason-list">{[{icon: CalendarDays,title: "Booking made simple.",text: "Choose your service and appointment on Ashraf's existing Setmore booking page."}, { icon: MapPin, title: "Right here in Northpine.", text: "Shop 5, Northpine Shopping Centre, Central Drive, Cape Town." }, { icon: Scissors, title: "Saturdays are for walk-ins.", text: "No online bookings on Saturdays. Walk-ins welcomed, 07:30–14:00." }].map(({ icon: Icon, title, text }) => <div className="reason" key={title}><Icon aria-hidden="true" size={23} strokeWidth={1.4} /><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div></section>
+        <section id="testimonials" aria-labelledby="testimonials-title" style={{ background: "#171614", color: "#f7f1e6", padding: "clamp(56px, 8vw, 104px) 0" }}>
+          <div className="container">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap", gap: 24, marginBottom: 32 }}>
+              <div>
+                <p className="eyebrow" style={{ color: "#c5a36b" }}>WHAT CLIENTS ARE SAYING</p>
+                <h2 id="testimonials-title" style={{ color: "#f7f1e6", margin: "12px 0 0", fontSize: "clamp(2rem, 4vw, 3.4rem)", lineHeight: 1.08 }}>THE WORD<br /><span style={{ color: "#c5a36b" }}>ON THE STREET.</span></h2>
+              </div>
+              <div aria-label="Setmore customer rating: 4.9 out of 5 from 13 reviews at the time of capture" style={{ textAlign: "left" }}>
+                <div style={{ fontSize: "2.5rem", fontWeight: 700, lineHeight: 1 }}>4.9<span style={{ fontSize: "1rem", fontWeight: 400, color: "#c6bfb4" }}>/5</span></div>
+                <div aria-hidden="true" style={{ color: "#d4ae70", letterSpacing: 3, fontSize: "1.25rem", margin: "6px 0" }}>★★★★★</div>
+                <p style={{ color: "#c6bfb4", margin: 0 }}>13 reviews on Setmore*</p>
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 16 }}>
+              {[
+                { name: "Craig", quote: "Been cutting at Ashraf’s since the barbershop’s opening. Their precise, detailed cuts is what its about. Not forgetting the entertaining vibes. I could not go to any other." },
+                { name: "Gresh", quote: "Ashraf’s Barber consistently delivers professional, precise cuts. The experience is always smooth, and you leave feeling sharp and refreshed. Highly recommend." },
+                { name: "Kevin", quote: "Makes it easier to schedule appointments." },
+              ].map(review => (
+                <figure key={review.name} style={{ margin: 0, padding: "28px 24px", border: "1px solid rgba(197,163,107,.35)", background: "#211f1c", display: "flex", flexDirection: "column", gap: 16 }}>
+                  <div aria-label="5 out of 5 stars" style={{ color: "#d4ae70", letterSpacing: 3 }}>★★★★★</div>
+                  <blockquote style={{ margin: 0, lineHeight: 1.7, flex: 1, color: "#f2eee7" }}>“{review.quote}”</blockquote>
+                  <figcaption style={{ color: "#c5a36b", fontWeight: 600 }}>— {review.name} <span style={{ color: "#c6bfb4", fontWeight: 400 }}>· Setmore review</span></figcaption>
+                </figure>
+              ))}
+            </div>
+            <div style={{ marginTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+              <p style={{ color: "#c6bfb4", margin: 0, fontSize: ".85rem" }}>*Rating and review count captured from the public Setmore listing; figures may change.</p>
+              <a href="https://ashrafshqbarbershop.setmore.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#d4ae70", display: "inline-flex", alignItems: "center", gap: 8, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 4 }}>Read all reviews on Setmore <ArrowUpRight size={17} aria-hidden="true" /></a>
+            </div>
+          </div>
+        </section>
+
+         <section id="why-us" className="why-section"><div className="container why-grid"><div><p className="eyebrow">IN THEIR OWN WORDS</p><h2>A CUT ABOVE.<br /><span>A WAY OF LIFE.</span></h2><blockquote className="about-quote">“BARBERSHOP IS NOT A HOBBY ITS A LIFESTYLE”<cite>— Ashraf’s HQ Barbershop · Setmore About listing</cite></blockquote><BookingButton label="Find Your Appointment" /></div><div className="reason-list">{[{icon: CalendarDays,title: "Booking made simple.",text: "Choose your service and appointment on Ashraf's existing Setmore booking page."}, { icon: MapPin, title: "Right here in Northpine.", text: "Shop 5, Northpine Shopping Centre, Central Drive, Cape Town." }, { icon: Scissors, title: "Saturdays are for walk-ins.", text: "No online bookings on Saturdays. Walk-ins welcomed, 07:30–14:00." }].map(({ icon: Icon, title, text }) => <div className="reason" key={title}><Icon aria-hidden="true" size={23} strokeWidth={1.4} /><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div></section>
 
         <section id="gallery" className="gallery-section section-light"><div className="container"><div className="section-heading"><div><p className="eyebrow">THE LOOK & FEEL</p><h2>CLASSIC ROOTS.<br /><span>MODERN ATTITUDE.</span></h2></div><p className="section-intro gallery-note">A visual moodboard for this concept.<br />AI-generated illustrative images, not photographs of the shop or its customers.</p></div><div className="gallery-grid"><figure><img src={interior} loading="lazy" width={1536} height={1024} alt="Fictional barber interior moodboard with a classic leather chair" /><figcaption><span>01 / THE CHAIR</span><span>Concept inspiration</span></figcaption></figure><figure><img src={tools} loading="lazy" width={1024} height={1024} alt="Illustrative still life of scissors, clipper, comb and shaving brush" /><figcaption><span>02 / THE DETAILS</span><span>Concept inspiration</span></figcaption></figure></div></div></section>
 
