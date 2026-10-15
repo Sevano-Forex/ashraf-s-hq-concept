@@ -1,4 +1,4 @@
-export const bookingUrl = "https://ashrafshqbarbershop.setmore.com/";
+export const bookingUrl = "https://ashrafshqbarbershop.setmore.com/book";
 export const businessAddress = "Ashraf’s HQ Barbershop, Shop 5, Northpine Shopping Centre, Central Drive, Cape Town, Western Cape 7560";
 export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessAddress)}`;
 export const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(businessAddress)}&output=embed`;
