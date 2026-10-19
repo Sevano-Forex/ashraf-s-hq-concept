@@ -3,6 +3,25 @@
 @source "../src";
 @custom-variant dark (&:is(.dark *));
 
+@media (min-width: 761px) {
+  .desktop-nav.desktop-nav-floating {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 10px;
+    padding: 6px 18px;
+    border: 1px solid var(--hero-border);
+    border-radius: 999px;
+    background: var(--charcoal);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+    white-space: nowrap;
+  }
+  .desktop-nav-floating a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-size: 12px; }
+  .desktop-nav-floating a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 999px; }
+  .barber-site main section[id] { scroll-margin-top: 90px; }
+}
+
 .faq-section { padding-block: 72px; }
 .faq-list { margin-top: 32px; }
 .faq-list details { border-bottom: 1px solid var(--brass-ink); }

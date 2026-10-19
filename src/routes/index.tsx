@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import interior from "@/assets/barber-interior.jpg";
@@ -31,12 +31,22 @@ function BookingButton({ outline = false, label = "Book Now", className = "" }: 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showFloatingNav, setShowFloatingNav] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const updateScrollPosition = () => setShowBackToTop(window.scrollY > 0);
+    const updateScrollPosition = () => {
+      setShowBackToTop(window.scrollY > 0);
+      const header = headerRef.current;
+      setShowFloatingNav(header ? window.scrollY > header.offsetTop + header.offsetHeight : false);
+    };
     updateScrollPosition();
     window.addEventListener("scroll", updateScrollPosition, { passive: true });
-    return () => window.removeEventListener("scroll", updateScrollPosition);
+    window.addEventListener("resize", updateScrollPosition);
+    return () => {
+      window.removeEventListener("scroll", updateScrollPosition);
+      window.removeEventListener("resize", updateScrollPosition);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -47,10 +57,10 @@ function Index() {
     <div className="barber-site">
       <a className="skip-link" href="#main">Skip to content</a>
       <div className="demo-banner"><span className="demo-indicator" aria-hidden="true" />Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop</div>
-      <header className="site-header">
+      <header ref={headerRef} className="site-header">
         <div className="container header-inner">
           <a className="brand-name" href="#" aria-label="Ashraf’s HQ Barbershop home">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a>
-          <nav className="desktop-nav" aria-label="Main navigation">
+          <nav className={`desktop-nav${showFloatingNav ? " desktop-nav-floating" : ""}`} aria-label="Main navigation">
             {navigation.map(item => (
               <a
                 key={item.id}
