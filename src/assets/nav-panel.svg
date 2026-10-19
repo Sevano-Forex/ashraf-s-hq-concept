@@ -1,9 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="80" viewBox="0 0 640 80" preserveAspectRatio="none">
   <defs>
     <linearGradient id="surface" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#34322d" stop-opacity=".97"/>
-      <stop offset="1" stop-color="#24231f" stop-opacity=".98"/>
+      <stop stop-color="#151512" stop-opacity=".99"/>
+      <stop offset=".55" stop-color="#22211d" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#292823" stop-opacity=".98"/>
     </linearGradient>
+    <filter id="inset" x="-10%" y="-30%" width="120%" height="160%">
+      <feOffset in="SourceAlpha" dy="5" result="offset"/>
+      <feGaussianBlur in="offset" stdDeviation="4" result="blur"/>
+      <feComposite in="SourceAlpha" in2="blur" operator="out" result="edge"/>
+      <feFlood flood-color="#000" flood-opacity=".8" result="shade"/>
+      <feComposite in="shade" in2="edge" operator="in" result="shadow"/>
+      <feComposite in="shadow" in2="SourceGraphic" operator="over"/>
+    </filter>
   </defs>
-  <path d="M1 1H639C594 1 593 77 535 77H105C47 77 46 1 1 1Z" fill="url(#surface)" stroke="#c5a36b" stroke-opacity=".22"/>
+  <path d="M1 1H639C594 1 593 77 535 77H105C47 77 46 1 1 1Z" fill="url(#surface)" filter="url(#inset)"/>
+  <path d="M1 1C46 1 47 77 105 77H535C593 77 594 1 639 1" fill="none" stroke="#f7f1e6" stroke-opacity=".12"/>
 </svg>

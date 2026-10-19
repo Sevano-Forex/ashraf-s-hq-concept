@@ -42,7 +42,6 @@
     right: -50px;
     height: 78px;
     background: url("./assets/nav-panel.svg") center / 100% 100% no-repeat;
-    filter: drop-shadow(0 5px 8px rgb(0 0 0 / 18%));
     pointer-events: none;
   }
   .barber-site .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .015em; color: #f7f1e6; }
