@@ -1,5 +1,7 @@
 # Client accounts: test phase
 
+**Database direction updated:** the user selected Cloudflare D1 `ashraf_client_auth_db`. See `docs/cloudflare-client-database.md` for the prepared D1 schema, binding, and remaining integration steps. The Supabase-specific implementation below records the earlier prototype and is not the selected D1 integration. Sample-account mode remains available; authenticated persistence is not yet connected.
+
 ## Current status
 
 - A Supabase/PostgreSQL database is provisioned for this Lovable project. The migration in `supabase/migrations/202610190001_client_test_accounts.sql` has been applied.

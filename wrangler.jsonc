@@ -2,6 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ashraf-s-hq-concept",
   "compatibility_date": "2026-10-15",
+  "d1_databases": [
+    {
+      "binding": "CLIENT_DB",
+      "database_name": "ashraf_client_auth_db",
+      "database_id": "ec75f4e8-77be-431d-96e8-8e1f9e23d40d",
+      "migrations_dir": "cloudflare/migrations"
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
