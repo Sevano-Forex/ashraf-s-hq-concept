@@ -395,6 +395,7 @@ h2 span { color: var(--muted-foreground); }
 .client-access-link span { color: var(--hero-muted); }
 .client-account-section { padding-block: 80px; background: var(--charcoal); color: var(--hero-foreground); border-block: 1px solid var(--hero-border); }
 .client-account-section .eyebrow { color: var(--primary); }
+.client-account-section h2 span { color: var(--primary); }
 .account-heading { display: grid; grid-template-columns: 1.1fr 1fr; align-items: end; gap: 40px; margin-bottom: 36px; }
 .account-heading > p { max-width: 48ch; color: var(--hero-muted); font-size: 14px; line-height: 1.8; }
 .account-login-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
