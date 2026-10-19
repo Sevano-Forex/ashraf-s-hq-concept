@@ -3,6 +3,18 @@
 @source "../src";
 @custom-variant dark (&:is(.dark *));
 
+/* Native cursors keep the clipper aligned with the mouse without animation. */
+@media (hover: hover) and (pointer: fine) {
+  .barber-site {
+    cursor: url("./assets/clipper-cursor.svg") 5 3, auto;
+  }
+
+  .barber-site a,
+  .barber-site button:not(:disabled) {
+    cursor: url("./assets/clipper-cursor-link.svg") 5 3, pointer;
+  }
+}
+
 @theme inline {
   --font-sans: "Manrope", sans-serif;
   --font-display: "Barlow Condensed", sans-serif;
