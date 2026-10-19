@@ -4,37 +4,49 @@
 @custom-variant dark (&:is(.dark *));
 
 @media (min-width: 761px) {
-  .desktop-nav.desktop-nav-floating {
-    position: fixed;
-    top: 16px;
-    left: 0;
-    right: 0;
-    width: max-content;
-    margin-inline: auto;
-    gap: 10px;
-    padding: 6px 40px 6px 24px;
-    border: 0;
+  .barber-site .site-header {
+    position: sticky;
+    top: 0;
+    background: transparent;
     isolation: isolate;
-    white-space: nowrap;
-  }
-  .desktop-nav.desktop-nav-floating::before {
-    content: "";
-    position: absolute;
-    inset: -7px -14px -9px;
-    z-index: -1;
-    background-image: url("./assets/menu-log.webp");
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(.72) drop-shadow(0 9px 7px rgb(0 0 0 / 55%));
-    opacity: .97;
     pointer-events: none;
   }
-  .desktop-nav.desktop-nav-floating a { text-shadow: 0 1px 3px #000; }
-  .desktop-nav.desktop-nav-floating a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .015em; color: #f7f1e6; }
-  .desktop-nav.desktop-nav-floating a:hover { color: #e8bc72; }
-  .desktop-nav-floating a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 999px; }
+  .site-header::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: 100%;
+    height: 90px;
+    background: var(--charcoal);
+    border: 1px solid transparent;
+    border-radius: 0;
+    transition: width 380ms cubic-bezier(.22, 1, .36, 1), height 380ms ease, top 380ms ease, border-radius 380ms ease, border-color 380ms ease, box-shadow 380ms ease;
+  }
+  .barber-site .header-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
+  .header-inner > .brand-name { justify-self: start; }
+  .header-inner > .header-actions { justify-self: end; }
+  .header-inner > .brand-name,
+  .header-inner > .header-actions { pointer-events: auto; transition: opacity 200ms ease, visibility 200ms ease; }
+  .barber-site .desktop-nav { position: relative; top: 0; gap: 10px; padding: 6px 18px; pointer-events: auto; white-space: nowrap; transition: top 380ms cubic-bezier(.22, 1, .36, 1); }
+  .barber-site .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .015em; color: #f7f1e6; }
+  .barber-site .desktop-nav a:hover { color: var(--primary); }
+  .barber-site .desktop-nav a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 999px; }
+  .site-header.site-header-compact::before { top: 8px; width: var(--nav-width, 500px); height: 56px; border-radius: 999px; border-color: var(--hero-border); box-shadow: 0 8px 24px rgb(0 0 0 / 25%); }
+  .site-header-compact .header-inner > .brand-name,
+  .site-header-compact .header-inner > .header-actions { opacity: 0; visibility: hidden; pointer-events: none; }
+  .barber-site .site-header-compact .desktop-nav { top: -9px; }
   .barber-site main section[id] { scroll-margin-top: 90px; }
+}
+@media (min-width: 761px) and (max-width: 1050px) {
+  .barber-site .header-inner { width: calc(100% - 32px); gap: 8px; }
+  .header-inner > .brand-name { font-size: 21px; }
+  .barber-site .desktop-nav { gap: 0; padding-inline: 12px; }
+  .barber-site .desktop-nav a { padding-inline: 8px; font-size: 14px; }
+  .header-inner .header-actions .booking-button { padding-inline: 12px; gap: 8px; }
 }
 
 .barber-site .booking-button,
