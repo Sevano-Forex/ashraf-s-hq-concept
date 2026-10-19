@@ -150,6 +150,31 @@ function Index() {
 
         <section id="location" className="location-section"><div className="container location-grid"><div><p className="eyebrow">IN THE NEIGHBOURHOOD</p><h2>FIND US IN<br /><span>NORTHPINE.</span></h2><div className="location-address"><MapPin size={23} aria-hidden="true" /><div><h3>Ashraf’s HQ Barbershop</h3><address>Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div></div><p className="location-note">Saturday: no online bookings. Walk-ins welcomed.</p><a className="text-link" href={mapsUrl} target="_blank" rel="noopener noreferrer">Get directions on Google Maps<ExternalLink size={16} /></a></div><iframe className="location-map" src={mapEmbedUrl} title={`Google Maps location: ${businessAddress}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer" /></div></section>
 
+        <section id="faq" className="faq-section section-light" aria-labelledby="faq-title">
+          <div className="container">
+            <p className="eyebrow">BEFORE YOUR VISIT</p>
+            <h2 id="faq-title">A FEW QUICK<br /><span>ANSWERS.</span></h2>
+            <div className="faq-list">
+              <details name="shop-faq">
+                <summary>How do I book an appointment?</summary>
+                <p>Choose your service and appointment on the shop’s existing Setmore page. <a href={bookingUrl} target="_blank" rel="noopener noreferrer">Book on Setmore <span className="sr-only">(opens in a new tab)</span></a>.</p>
+              </details>
+              <details name="shop-faq">
+                <summary>Can I book online for Saturday?</summary>
+                <p>Saturday is for walk-ins, with no online bookings. The advertised Saturday hours are 07:30–14:00.</p>
+              </details>
+              <details name="shop-faq">
+                <summary>Where is the shop?</summary>
+                <p>{businessAddress}. <a href={mapsUrl} target="_blank" rel="noopener noreferrer">Get directions <span className="sr-only">(opens in a new tab)</span></a>.</p>
+              </details>
+              <details name="shop-faq">
+                <summary>Where can I check services and prices?</summary>
+                <p>Browse the <a href="#services">service menu above</a> and confirm current services and final prices with the shop before your appointment.</p>
+              </details>
+            </div>
+          </div>
+        </section>
+
         <section id="book" className="book-section"><div className="container book-inner"><p className="eyebrow">MAKE TIME FOR A FRESH START</p><h2>YOUR NEXT LOOK<br />STARTS HERE.</h2><BookingButton label="Book Your Appointment" /></div></section>
       </main>
       <footer className="site-footer"><div className="container"><div className="footer-top"><div><a href="#" className="brand-name">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a><address className="footer-address">Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div><div className="footer-hours"><h3><Clock size={16} aria-hidden="true" />Operating hours</h3><dl>{openingHours.map(item => <div key={item.days}><dt>{item.days}</dt><dd>{item.hours}</dd></div>)}</dl><p>Saturday: walk-ins welcomed · no online bookings</p></div><div className="footer-contact"><h3>Contact the shop</h3><a href="tel:+27814652086"><Phone size={15} aria-hidden="true" />+27 81 465 2086</a><a href="mailto:ashraf.thebus100@gmail.com"><Mail size={15} aria-hidden="true" />ashraf.thebus100@gmail.com</a><a href="https://www.facebook.com/p/Ashraf-HQ-BarberShop-100063633908953/" target="_blank" rel="noopener noreferrer" aria-label="Visit Ashraf’s HQ Barbershop on Facebook — opens in a new tab"><Facebook size={15} aria-hidden="true" />Facebook</a><a
@@ -160,6 +185,11 @@ function Index() {
 >
   Book an appointment<ArrowUpRight size={16} />
 </a></div></div><div className="footer-bottom"><p>Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop</p><span>Business details: public Setmore listing · Bookings handled by Setmore</span></div></div></footer>
+      <nav className="mobile-action-bar" aria-label="Quick shop actions">
+        <Button asChild variant="barberOutline"><a href="tel:+27814652086"><Phone aria-hidden="true" />Call</a></Button>
+        <Button asChild variant="barberOutline"><a href={mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Get directions on Google Maps (opens in a new tab)"><MapPin aria-hidden="true" />Directions</a></Button>
+        <Button asChild variant="brass"><a href={bookingUrl} target="_blank" rel="noopener noreferrer" aria-label="Book on Setmore (opens in a new tab)"><CalendarDays aria-hidden="true" />Book</a></Button>
+      </nav>
       {showBackToTop && (
         <Button
           type="button"

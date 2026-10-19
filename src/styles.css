@@ -3,6 +3,38 @@
 @source "../src";
 @custom-variant dark (&:is(.dark *));
 
+.faq-section { padding-block: 72px; }
+.faq-list { margin-top: 32px; }
+.faq-list details { border-bottom: 1px solid var(--brass-ink); }
+.faq-list summary { position: relative; padding: 22px 40px 22px 0; font-weight: 600; list-style: none; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { content: "+"; position: absolute; right: 10px; color: var(--brass-ink); font-size: 24px; top: 16px; }
+.faq-list details[open] summary::after { content: "−"; }
+.faq-list summary:focus-visible { outline: 2px solid var(--brass-ink); outline-offset: 4px; }
+.faq-list p { max-width: 70ch; padding-bottom: 22px; line-height: 1.8; }
+.faq-list a { color: var(--brass-ink); text-decoration: underline; text-underline-offset: 3px; }
+.mobile-action-bar { display: none; }
+
+@media (max-width: 767px) {
+  .barber-site { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  .mobile-action-bar {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 8px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: #171614;
+    border-top: 1px solid var(--hero-border);
+    padding: 12px max(12px, env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  }
+  .mobile-action-bar > a { min-height: 44px; padding-inline: 8px; font-size: 12px; }
+  .barber-site .back-to-top { bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .faq-section { padding-block: 55px; }
+}
+
 .back-to-top {
   position: fixed;
   right: max(20px, env(safe-area-inset-right));
