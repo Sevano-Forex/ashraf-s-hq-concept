@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ClientAccountSection } from "@/components/client-account";
 import interior from "@/assets/barber-interior.jpg";
 import tools from "@/assets/barber-tools.jpg";
 
@@ -104,6 +105,7 @@ function Index() {
               <p className="hero-description">Your next chapter in men’s grooming.<br />Find your next appointment in Northpine.</p>
               <div className="hero-buttons"><BookingButton label="Book Your Appointment" /><Button variant="barberOutline" asChild className="explore-button"><a href="#services">Explore Services<ArrowDown aria-hidden="true" /></a></Button></div>
               <p className="booking-note"><CalendarDays size={14} aria-hidden="true" />Book securely on Setmore</p>
+              <a className="client-access-link" href="#client-account">Client login <span>· Test preview</span><ArrowUpRight size={14} aria-hidden="true" /></a>
             </div>
             <div className="hero-bottom"><a href="#location"><MapPin size={15} aria-hidden="true" />Northpine Shopping Centre, Cape Town</a><span>Illustrative concept image · not the actual shop</span></div>
           </div>
@@ -159,6 +161,8 @@ function Index() {
         <section id="gallery" className="gallery-section section-light"><div className="container"><div className="section-heading"><div><p className="eyebrow">THE LOOK & FEEL</p><h2>CLASSIC ROOTS.<br /><span>MODERN ATTITUDE.</span></h2></div><p className="section-intro gallery-note">A visual moodboard for this concept.<br />AI-generated illustrative images, not photographs of the shop or its customers.</p></div><div className="gallery-grid"><figure><img src={interior} loading="lazy" width={1536} height={1024} alt="Fictional barber interior moodboard with a classic leather chair" /><figcaption><span>01 / THE CHAIR</span><span>Concept inspiration</span></figcaption></figure><figure><img src={tools} loading="lazy" width={1024} height={1024} alt="Illustrative still life of scissors, clipper, comb and shaving brush" /><figcaption><span>02 / THE DETAILS</span><span>Concept inspiration</span></figcaption></figure></div></div></section>
 
         <section id="location" className="location-section"><div className="container location-grid"><div><p className="eyebrow">IN THE NEIGHBOURHOOD</p><h2>FIND US IN<br /><span>NORTHPINE.</span></h2><div className="location-address"><MapPin size={23} aria-hidden="true" /><div><h3>Ashraf’s HQ Barbershop</h3><address>Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div></div><p className="location-note">Saturday: no online bookings. Walk-ins welcomed.</p><a className="text-link" href={mapsUrl} target="_blank" rel="noopener noreferrer">Get directions on Google Maps<ExternalLink size={16} /></a></div><iframe className="location-map" src={mapEmbedUrl} title={`Google Maps location: ${businessAddress}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer" /></div></section>
+
+        <ClientAccountSection />
 
         <section id="faq" className="faq-section section-light" aria-labelledby="faq-title">
           <div className="container">

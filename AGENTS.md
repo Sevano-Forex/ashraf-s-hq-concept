@@ -9,7 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep the speculative site as one frontend-only index route with anchor navigation; no data collection or server logic is needed.
+- Keep the public concept on one index route with anchor navigation. The user has authorized a test-only client account area and Supabase database. Keep public registration, payments, and marketing delivery disabled until a later explicitly authorized phase. Never treat the sample-account preview as authentication or persist its fictional data.
 - Define presentation tokens and responsive layouts in src/styles.css and use the shared Button for interactive controls to keep the concept consistent.
 - Treat generated barber imagery as illustrative moodboard material and label it where displayed so it cannot be confused with verified shop photography.
 - Keep public business data in src/lib/barbershop.ts and the third-party booking panel in src/components/booking-embed.tsx so menu/contact facts and embed failure handling remain independently maintainable.
