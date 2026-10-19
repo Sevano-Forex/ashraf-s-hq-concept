@@ -2,6 +2,10 @@
 
 The client area remains on the index route at `#client-account`. Cloudflare D1 `ashraf_client_auth_db` is the selected storage. The earlier Supabase prototype is unused; its historical migration is retained, but its browser adapter and settings have been removed.
 
+## Verified deployment
+
+Two fictional approved accounts were provisioned in D1, the encrypted signing key was saved by the user, and the trusted origin and activation flag were enabled in the Worker dashboard. `keep_vars: true` preserves dashboard-managed runtime variables on subsequent Git deployments. Public registration remains disabled.
+
 ## Current behavior
 
 - The sample account is fictional, held in memory, and never writes to any database.

@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ashraf-s-hq-concept",
   "compatibility_date": "2026-10-15",
+  "keep_vars": true,
   "d1_databases": [
     {
       "binding": "CLIENT_DB",

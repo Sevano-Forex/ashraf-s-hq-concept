@@ -7,7 +7,7 @@ Selected database: **ashraf_client_auth_db**, account `685cb53a67c522bb0a483a758
 - The site Worker `ashraf-s-hq-concept` has binding **CLIENT_DB** pointing to this database, confirmed in Cloudflare's dashboard.
 - `0001_client_accounts.sql` was applied through the D1 console: profiles, preferences, consent history, future memberships, and basic activity.
 - `0002_test_auth.sql` was applied through the D1 console: Better Auth users, hashed credentials, sessions, verification records, and rate limits. Generated from the shared auth options and pinned library using `node scripts/generate-auth-schema.mjs`.
-- No customer data was imported. No test users were created by these schema migrations. Test sign-in remains gated until the private key, origin, activation flag, and approved accounts are configured.
+- No customer data was imported. Following explicit user approval, two fictional test users were provisioned separately from these schema migrations. The user saved the encrypted signing key; the trusted origin and activation flag were then configured in the Worker dashboard.
 
 These two migrations were applied directly through the dashboard, **not through Wrangler's migration ledger**. Do not blindly run `wrangler d1 migrations apply --remote`: first baseline these already-applied files in the migration tooling, or it will try to recreate existing tables. Do not run the historical PostgreSQL migration under `supabase/migrations` against D1.
 
