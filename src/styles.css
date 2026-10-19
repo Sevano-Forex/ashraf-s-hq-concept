@@ -13,10 +13,10 @@
     margin-inline: auto;
     gap: 10px;
     padding: 6px 32px;
-    border: 2px solid rgb(122 78 44 / 85%);
-    border-radius: 24px 30px 25px 28px / 30px 24px 29px 25px;
+    border: 1px solid rgb(144 104 66 / 75%);
+    border-radius: 23px 29px 24px 27px / 29px 23px 28px 24px;
     isolation: isolate;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 30%), inset 0 3px 2px rgb(247 207 152 / 18%), inset 0 -4px 3px rgb(0 0 0 / 30%);
+    box-shadow: 0 16px 24px -5px rgb(0 0 0 / 50%), 0 5px 6px rgb(0 0 0 / 30%);
     white-space: nowrap;
   }
   .desktop-nav.desktop-nav-floating::before {
@@ -25,7 +25,7 @@
     inset: 0;
     z-index: -1;
     border-radius: inherit;
-    background-image: linear-gradient(rgb(25 17 12 / 66%), rgb(25 17 12 / 66%)), url("./assets/menu-wood.jpg");
+    background-image: linear-gradient(rgb(25 17 12 / 32%), rgb(25 17 12 / 32%)), url("./assets/menu-bark.webp");
     background-size: cover;
     background-position: center;
     opacity: .94;
@@ -34,16 +34,11 @@
   .desktop-nav.desktop-nav-floating::after {
     content: "";
     position: absolute;
-    inset: 4px 6px;
+    inset: 0;
     z-index: -1;
     border-radius: inherit;
-    background-image:
-      repeating-radial-gradient(ellipse 9px 22px at center, #50321f 0 2px, #aa794b 3px 4px, #674128 5px 6px),
-      repeating-radial-gradient(ellipse 9px 22px at center, #50321f 0 2px, #aa794b 3px 4px, #674128 5px 6px);
-    background-size: 18px 100%;
-    background-position: left center, right center;
-    background-repeat: no-repeat;
-    opacity: .85;
+    background-image: linear-gradient(180deg, rgb(255 218 167 / 18%), transparent 28%, transparent 52%, rgb(0 0 0 / 42%));
+    box-shadow: inset 0 2px 2px rgb(255 225 182 / 30%), inset 0 -5px 5px rgb(0 0 0 / 40%), inset 8px 0 12px rgb(0 0 0 / 20%), inset -8px 0 12px rgb(0 0 0 / 20%);
     pointer-events: none;
   }
   .desktop-nav.desktop-nav-floating a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .015em; color: #f7f1e6; }
@@ -56,6 +51,7 @@
 .barber-site .explore-button {
   transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
+.barber-site .explore-button { background-color: #70452b; color: #fff5e6; border-color: var(--primary); }
 .barber-site .booking-button:focus-visible,
 .barber-site .explore-button:focus-visible { box-shadow: 0 0 0 3px rgb(197 163 107 / 35%); }
 
@@ -63,6 +59,10 @@
   .barber-site .booking-button:hover {
     background-color: #70452b;
     color: #fff5e6;
+  }
+  .barber-site .explore-button:hover {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
   .barber-site .booking-button:hover,
   .barber-site .explore-button:hover { box-shadow: 0 8px 20px rgb(0 0 0 / 28%), 0 0 0 1px rgb(197 163 107 / 55%); }
