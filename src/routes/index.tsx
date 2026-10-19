@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock } from "lucide-react";
+import { ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import interior from "@/assets/barber-interior.jpg";
 import tools from "@/assets/barber-tools.jpg";
@@ -139,7 +139,7 @@ function Index() {
 
         <section id="book" className="book-section"><div className="container book-inner"><p className="eyebrow">MAKE TIME FOR A FRESH START</p><h2>YOUR NEXT LOOK<br />STARTS HERE.</h2><BookingButton label="Book Your Appointment" /></div></section>
       </main>
-      <footer className="site-footer"><div className="container"><div className="footer-top"><div><a href="#" className="brand-name">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a><address className="footer-address">Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div><div className="footer-hours"><h3><Clock size={16} aria-hidden="true" />Operating hours</h3><dl>{openingHours.map(item => <div key={item.days}><dt>{item.days}</dt><dd>{item.hours}</dd></div>)}</dl><p>Saturday: walk-ins welcomed · no online bookings</p></div><div className="footer-contact"><h3>Contact the shop</h3><a href="tel:+27814652086"><Phone size={15} aria-hidden="true" />+27 81 465 2086</a><a href="mailto:ashraf.thebus100@gmail.com"><Mail size={15} aria-hidden="true" />ashraf.thebus100@gmail.com</a><a
+      <footer className="site-footer"><div className="container"><div className="footer-top"><div><a href="#" className="brand-name">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a><address className="footer-address">Shop 5, Northpine Shopping Centre<br />Central Drive, Cape Town<br />Western Cape 7560</address></div><div className="footer-hours"><h3><Clock size={16} aria-hidden="true" />Operating hours</h3><dl>{openingHours.map(item => <div key={item.days}><dt>{item.days}</dt><dd>{item.hours}</dd></div>)}</dl><p>Saturday: walk-ins welcomed · no online bookings</p></div><div className="footer-contact"><h3>Contact the shop</h3><a href="tel:+27814652086"><Phone size={15} aria-hidden="true" />+27 81 465 2086</a><a href="mailto:ashraf.thebus100@gmail.com"><Mail size={15} aria-hidden="true" />ashraf.thebus100@gmail.com</a><a href="https://www.facebook.com/p/Ashraf-HQ-BarberShop-100063633908953/" target="_blank" rel="noopener noreferrer" aria-label="Visit Ashraf’s HQ Barbershop on Facebook — opens in a new tab"><Facebook size={15} aria-hidden="true" />Facebook</a><a
   className="footer-book"
   href={bookingUrl}
   target="_blank"
