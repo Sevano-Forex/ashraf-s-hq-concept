@@ -24,21 +24,34 @@
     background: var(--charcoal);
     border: 1px solid transparent;
     border-radius: 0;
-    transition: width 380ms cubic-bezier(.22, 1, .36, 1), height 380ms ease, top 380ms ease, border-radius 380ms ease, border-color 380ms ease, box-shadow 380ms ease;
+    opacity: 1;
+    transition: width 380ms cubic-bezier(.22, 1, .36, 1), height 380ms ease, top 380ms ease, opacity 380ms ease;
   }
   .barber-site .header-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
   .header-inner > .brand-name { justify-self: start; }
   .header-inner > .header-actions { justify-self: end; }
   .header-inner > .brand-name,
   .header-inner > .header-actions { pointer-events: auto; transition: opacity 200ms ease, visibility 200ms ease; }
-  .barber-site .desktop-nav { position: relative; top: 0; gap: 10px; padding: 6px 18px; pointer-events: auto; white-space: nowrap; transition: top 380ms cubic-bezier(.22, 1, .36, 1); }
+  .barber-site .desktop-nav { position: relative; top: 0; gap: 10px; padding: 6px 18px; pointer-events: auto; white-space: nowrap; isolation: isolate; transition: top 380ms cubic-bezier(.22, 1, .36, 1); }
+  .desktop-nav::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -17px;
+    left: -50px;
+    right: -50px;
+    height: 78px;
+    background: url("./assets/nav-panel.svg") center / 100% 100% no-repeat;
+    filter: drop-shadow(0 5px 8px rgb(0 0 0 / 18%));
+    pointer-events: none;
+  }
   .barber-site .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: .015em; color: #f7f1e6; }
   .barber-site .desktop-nav a:hover { color: var(--primary); }
   .barber-site .desktop-nav a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 999px; }
-  .site-header.site-header-compact::before { top: 8px; width: var(--nav-width, 500px); height: 56px; border-radius: 999px; border-color: var(--hero-border); box-shadow: 0 8px 24px rgb(0 0 0 / 25%); }
+  .site-header.site-header-compact::before { top: 9px; width: calc(var(--nav-width, 500px) + 100px); height: 78px; opacity: 0; }
   .site-header-compact .header-inner > .brand-name,
   .site-header-compact .header-inner > .header-actions { opacity: 0; visibility: hidden; pointer-events: none; }
-  .barber-site .site-header-compact .desktop-nav { top: -9px; }
+  .barber-site .site-header-compact .desktop-nav { top: 9px; }
   .barber-site main section[id] { scroll-margin-top: 90px; }
 }
 @media (min-width: 761px) and (max-width: 1050px) {
