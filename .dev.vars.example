@@ -1,0 +1,4 @@
+# Local-only example; HTTPS and a matching origin are required for actual auth.
+CLIENT_AUTH_ENABLED=false
+CLIENT_AUTH_ORIGIN=https://ashraf-s-hq-concept.ascend-web-studio.workers.dev
+CLIENT_AUTH_SECRET=

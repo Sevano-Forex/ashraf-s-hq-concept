@@ -1,4 +1,5 @@
 import "./lib/error-capture";
+import { handleClientRequest, type ClientEnv } from "./lib/client-account-server";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
@@ -47,6 +48,24 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (
+        new URL(request.url).pathname.startsWith("/api/client/") ||
+        new URL(request.url).pathname.startsWith("/api/auth/")
+      ) {
+        const runtime = (request as Request & { runtime?: { cloudflare?: { env?: ClientEnv } } })
+          .runtime;
+        try {
+          return await handleClientRequest(
+            request,
+            runtime?.cloudflare?.env ?? (env as ClientEnv) ?? {},
+          );
+        } catch {
+          return Response.json(
+            { error: "Test account service is temporarily unavailable." },
+            { status: 503, headers: { "cache-control": "no-store" } },
+          );
+        }
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

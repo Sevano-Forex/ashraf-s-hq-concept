@@ -1,56 +1,27 @@
 # Client accounts: test phase
 
-**Database direction updated:** the user selected Cloudflare D1 `ashraf_client_auth_db`. See `docs/cloudflare-client-database.md` for the prepared D1 schema, binding, and remaining integration steps. The Supabase-specific implementation below records the earlier prototype and is not the selected D1 integration. Sample-account mode remains available; authenticated persistence is not yet connected.
+The client area remains on the index route at `#client-account`. Cloudflare D1 `ashraf_client_auth_db` is the selected storage. The earlier Supabase prototype is unused; its historical migration is retained, but its browser adapter and settings have been removed.
 
-## Current status
+## Current behavior
 
-- A Supabase/PostgreSQL database is provisioned for this Lovable project. The migration in `supabase/migrations/202610190001_client_test_accounts.sql` has been applied.
-- The client area is on the existing index route at `#client-account`.
-- Sample-account mode uses fictional in-memory data, with no credentials, database writes, emails, charges, or persistent sample session.
-- Actual test sign-in requires the project URL and public publishable/anon key in the deployment environment. Without them, credential fields stay disabled. See `.env.example`; never put a service-role key in browser configuration.
-- Only administrator-provisioned test profiles are accepted. There is no public registration or payment checkout. A database constraint permits only test profiles during this phase.
+- The sample account is fictional, held in memory, and never writes to any database.
+- Actual sign-in is disabled unless the Worker has all four settings: the `CLIENT_DB` D1 binding, `CLIENT_AUTH_ENABLED=true`, `CLIENT_AUTH_ORIGIN` set to the exact HTTPS site origin, and a private `CLIENT_AUTH_SECRET` of at least 32 characters.
+- Better Auth 1.7.10 handles hashed passwords and Secure/HttpOnly session cookies. Sessions expire after eight hours; the UI requests a session cookie rather than persistent remember-me login.
+- Public registration, recovery emails, payment checkout, and marketing delivery are disabled. Provision approved fictional test accounts only.
+- The server verifies the session and an approved `is_test=1` profile on every account read/write. It derives the client ID from the session, ignores submitted IDs, and uses prepared SQL statements.
+- Clients can edit their own display name and optional email preference. Memberships are read-only. Consent changes are recorded by database triggers.
+- Auth requests are restricted to same-origin sign-in/sign-out and database-backed rate limiting (five sign-in attempts per minute per caller). Other auth endpoints are not exposed.
+- Basic profile-update activity is recorded. The schema reserves `test_login` for a later trusted login-event integration; login counts are not currently populated.
 
-## Connect approved test users
+## Activation
 
-1. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in the Lovable deployment environment and `.env.local` for local checks. Rebuild after changing them.
-2. Create test users through the Supabase Auth administration interface with confirmed test email addresses. Do not insert password records directly into `auth.users` or add passwords to application tables.
-3. As an administrator, insert a `client_profiles` row for each Auth user UUID, using a fictional display name and `is_test = true`. Optionally insert matching marketing-preference and membership rows. Without a profile, login is rejected and the session is signed out.
-4. Verify two separate test accounts cannot read or update each other's rows. Verify an authenticated user without an approved profile cannot enter the portal. Test wrong passwords, expired sessions, sign-out, reload, saved profile changes, and consent changes.
-5. Use test accounts only. Before real customers, confirm business approval, data ownership, privacy notice and retention, account deletion, recovery-email delivery, public signup policy, and environment separation. Remove the test-only constraint only as part of that later reviewed rollout.
+1. Confirm the D1 binding and both SQL migrations are applied (see `cloudflare-client-database.md`).
+2. Run `node scripts/prepare-test-clients.mjs` locally. This offline staff tool prepares two fictional `.test` accounts, hashed credential SQL, and a random signing key in ignored `.tooling` files. It never enables remote access or prints secrets. Do not commit or share those files. Do not rerun over existing prepared credentials.
+3. With approval to create test credentials, apply `.tooling/provision-test-clients.sql` to the selected test D1 database through an authenticated administrative session. Never apply it to a production customer database.
+4. In Cloudflare Worker Settings, add `CLIENT_AUTH_SECRET` as an encrypted **Secret**. The user should enter and submit this credential directly. It must never use a `VITE_` prefix or be committed in configuration.
+5. Add plain-text variables `CLIENT_AUTH_ORIGIN=https://ashraf-s-hq-concept.ascend-web-studio.workers.dev` and `CLIENT_AUTH_ENABLED=true`. Keep the latter absent or `false` until the private key and approved accounts are ready.
+6. Test both accounts on the actual Worker site: sign-in, reload, save name, opt in/out, sign-out, wrong password, and isolation. Lovable's independent preview remains in sample mode without the Worker bindings. Disable test sign-in by setting `CLIENT_AUTH_ENABLED=false`.
 
-Auth sessions use session storage, so they are not deliberately kept after the browser session. Supabase Auth handles passwords; the application never stores them in its own tables.
+Automated tests exercise real SQL through a D1-compatible SQLite fixture, including two-account isolation, unapproved account rejection, session expiry, sign-out, rate limits, and consent audit behavior. Remote end-to-end sign-in must still be verified after activation.
 
-## Database and access
-
-| Table | Purpose | Client access |
-|---|---|---|
-| client_profiles | Test identity, name, account creation time | Read own; update own name only |
-| client_marketing_preferences | Optional email consent, default false | Read and change own preference |
-| client_consent_history | Database-written consent audit | Read own; cannot rewrite history |
-| client_memberships | Future provider subscription reference and status | Read own; administrators write |
-| client_events | Minimal account activity | Insert own allowed event types; no client-wide reporting |
-
-All tables have row-level security. Anonymous access is revoked. No card data or generic unstructured tracking payload is stored. Bookings remain in Setmore; no booking history, attendance, revenue, or no-show data is inferred from clicks.
-
-## Analytics foundation
-
-An administrator can calculate test account growth, saved opt-in rate, and test-login events from the database. For example:
-
-```sql
-select date_trunc('month', created_at) as month, count(*) as test_accounts
-from public.client_profiles group by 1 order by 1;
-select count(*) filter (where email_opt_in) as opted_in, count(*) as preference_records
-from public.client_marketing_preferences;
-select date_trunc('day', occurred_at) as day, count(*) as test_logins
-from public.client_events where event_type = 'test_login' group by 1 order by 1;
-```
-
-These are internal test metrics, not a production analytics dashboard or guaranteed business outcomes. No marketing platform is connected.
-
-## Future paid memberships and marketing
-
-Paid memberships and marketing consent are separate. A later payment integration must create checkout server-side and update memberships through verified, idempotent payment-provider webhooks. Clients must never be able to mark themselves paid. Only provider IDs and subscription status belong here, not card details.
-
-A later email integration must check current consent, provide unsubscribe handling, and distinguish marketing from necessary account messages. This test version never sends marketing messages.
-
-References: https://supabase.com/docs/guides/auth/passwords and https://supabase.com/docs/guides/database/postgres/row-level-security
+Before real customer registration, add recovery and verified-email delivery, data retention/deletion, an appropriate privacy notice, and a separate reviewed rollout. Paid memberships require a payment provider and verified server-side webhooks; marketing requires a delivery provider. Setmore bookings remain independent and no appointment or revenue history is imported.

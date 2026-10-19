@@ -1,15 +1,3 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-
-let client: SupabaseClient | null = null;
-export function getAccountClient(): SupabaseClient | null {
-  const url = import.meta.env["VITE_SUPABASE_URL"];
-  const key = import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] || import.meta.env["VITE_SUPABASE_ANON_KEY"];
-  if (!url || !key || typeof window === "undefined") return null;
-  return client ??= createClient(url, key, {
-    auth: { storage: window.sessionStorage, persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
-  });
-}
-
 export type ClientAccount = {
   userId: string;
   displayName: string;
@@ -18,28 +6,65 @@ export type ClientAccount = {
   membershipStatus: string;
   planName: string | null;
 };
-
 export const sampleAccount: ClientAccount = {
-  userId: "sample-only", displayName: "Demo Client", email: "client@example.test",
-  emailOptIn: false, membershipStatus: "not_enrolled", planName: null,
+  userId: "sample-only",
+  displayName: "Demo Client",
+  email: "client@example.test",
+  emailOptIn: false,
+  membershipStatus: "not_enrolled",
+  planName: null,
 };
-
-export async function loadTestAccount(db: SupabaseClient, userId: string, email: string): Promise<ClientAccount> {
-  const { data: profile, error } = await db.from("client_profiles").select("display_name,is_test").eq("user_id", userId).maybeSingle();
-  if (error) throw new Error("Your account could not be loaded. Please try again.");
-  if (!profile?.is_test) {
-    await db.auth.signOut();
-    throw new Error("This preview is available to approved test accounts only.");
+async function accountRequest<T>(path: string, method = "GET", body?: unknown): Promise<T> {
+  const response = await fetch(path, {
+    method,
+    credentials: "same-origin",
+    cache: "no-store",
+    ...(body === undefined
+      ? {}
+      : { headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
+  });
+  if (!response.ok)
+    throw new Error(
+      response.status === 401
+        ? "Please sign in again."
+        : "Your test account request could not be completed. Please try again.",
+    );
+  return response.json() as Promise<T>;
+}
+export const accountClient = {
+  async restore(): Promise<ClientAccount | null> {
+    const response = await fetch("/api/client/account", {
+      credentials: "same-origin",
+      cache: "no-store",
+    });
+    if (response.status === 401) return null;
+    if (!response.ok) throw new Error("Your test account could not be loaded.");
+    return response.json() as Promise<ClientAccount>;
+  },
+  async signIn(email: string, password: string) {
+    await accountRequest("/api/auth/sign-in/email", "POST", { email, password, rememberMe: false });
+    try {
+      const account = await this.restore();
+      if (!account) throw new Error("Please sign in again.");
+      return account;
+    } catch (error) {
+      await this.signOut();
+      throw error;
+    }
+  },
+  saveProfile: (displayName: string) =>
+    accountRequest("/api/client/profile", "PATCH", { displayName }),
+  savePreferences: (emailOptIn: boolean) =>
+    accountRequest("/api/client/preferences", "PATCH", { emailOptIn }),
+  signOut: () => accountRequest("/api/auth/sign-out", "POST", {}),
+};
+export type AccountClient = typeof accountClient;
+export async function getAccountClient(): Promise<AccountClient | null> {
+  if (typeof window === "undefined") return null;
+  try {
+    const status = await accountRequest<{ configured: boolean }>("/api/client/status");
+    return status.configured ? accountClient : null;
+  } catch {
+    return null;
   }
-  const [preferences, membership] = await Promise.all([
-    db.from("client_marketing_preferences").select("email_opt_in").eq("user_id", userId).maybeSingle(),
-    db.from("client_memberships").select("status,plan_name").eq("user_id", userId).maybeSingle(),
-  ]);
-  if (preferences.error || membership.error) throw new Error("Your account details could not be loaded. Please try again.");
-  return {
-    userId, email, displayName: profile.display_name,
-    emailOptIn: preferences.data?.email_opt_in ?? false,
-    membershipStatus: membership.data?.status ?? "not_enrolled",
-    planName: membership.data?.plan_name ?? null,
-  };
 }
