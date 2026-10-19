@@ -60,6 +60,10 @@
 .barber-site .explore-button:focus-visible { box-shadow: 0 0 0 3px rgb(197 163 107 / 35%); }
 
 @media (hover: hover) and (pointer: fine) {
+  .barber-site .booking-button:hover {
+    background-color: #70452b;
+    color: #fff5e6;
+  }
   .barber-site .booking-button:hover,
   .barber-site .explore-button:hover { box-shadow: 0 8px 20px rgb(0 0 0 / 28%), 0 0 0 1px rgb(197 163 107 / 55%); }
 }
