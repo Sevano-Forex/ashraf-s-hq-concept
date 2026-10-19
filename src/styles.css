@@ -3,6 +3,16 @@
 @source "../src";
 @custom-variant dark (&:is(.dark *));
 
+.back-to-top {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 25%);
+}
+
 /* Native cursors keep the clipper aligned with the mouse without animation. */
 @media (hover: hover) and (pointer: fine) {
   .barber-site {

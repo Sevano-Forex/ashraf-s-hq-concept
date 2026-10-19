@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock, Facebook } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUp, ArrowUpRight, ArrowDown, CalendarDays, MapPin, Menu, X, Scissors, ExternalLink, Phone, Mail, Clock, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import interior from "@/assets/barber-interior.jpg";
 import tools from "@/assets/barber-tools.jpg";
@@ -30,6 +30,19 @@ function BookingButton({ outline = false, label = "Book Now", className = "" }: 
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const updateScrollPosition = () => setShowBackToTop(window.scrollY > 0);
+    updateScrollPosition();
+    window.addEventListener("scroll", updateScrollPosition, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollPosition);
+  }, []);
+
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "instant" : "smooth" });
+  };
   return (
     <div className="barber-site">
       <a className="skip-link" href="#main">Skip to content</a>
@@ -147,6 +160,19 @@ function Index() {
 >
   Book an appointment<ArrowUpRight size={16} />
 </a></div></div><div className="footer-bottom"><p>Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop</p><span>Business details: public Setmore listing · Bookings handled by Setmore</span></div></div></footer>
+      {showBackToTop && (
+        <Button
+          type="button"
+          variant="brass"
+          size="icon"
+          className="back-to-top"
+          aria-label="Back to top"
+          title="Back to top"
+          onClick={scrollToTop}
+        >
+          <ArrowUp aria-hidden="true" />
+        </Button>
+      )}
     </div>
   );
 }
