@@ -33,7 +33,6 @@ function Index() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showFloatingNav, setShowFloatingNav] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const updateScrollPosition = () => {
@@ -41,19 +40,12 @@ function Index() {
       const header = headerRef.current;
       setShowFloatingNav(header ? window.scrollY > 0 && header.getBoundingClientRect().top <= 0 : false);
     };
-    const updateLayout = () => {
-      if (headerRef.current && navRef.current) {
-        headerRef.current.style.setProperty("--nav-width", `${navRef.current.offsetWidth}px`);
-      }
-      updateScrollPosition();
-    };
-    updateLayout();
     updateScrollPosition();
     window.addEventListener("scroll", updateScrollPosition, { passive: true });
-    window.addEventListener("resize", updateLayout);
+    window.addEventListener("resize", updateScrollPosition);
     return () => {
       window.removeEventListener("scroll", updateScrollPosition);
-      window.removeEventListener("resize", updateLayout);
+      window.removeEventListener("resize", updateScrollPosition);
     };
   }, []);
 
@@ -68,7 +60,7 @@ function Index() {
       <header ref={headerRef} className={`site-header${showFloatingNav ? " site-header-compact" : ""}`}>
         <div className="container header-inner">
           <a className="brand-name" href="#" aria-label="Ashraf’s HQ Barbershop home">ASHRAF’S HQ<span>BARBERSHOP · NORTHPINE</span></a>
-          <nav ref={navRef} className="desktop-nav" aria-label="Main navigation">
+          <nav className="desktop-nav" aria-label="Main navigation">
             {navigation.map(item => (
               <a
                 key={item.id}

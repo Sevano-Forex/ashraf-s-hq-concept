@@ -6,26 +6,10 @@
 @media (min-width: 761px) {
   .barber-site .site-header {
     position: sticky;
-    top: 0;
+    top: -34px;
     background: transparent;
     isolation: isolate;
     pointer-events: none;
-  }
-  .site-header::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-inline: auto;
-    width: 100%;
-    height: 90px;
-    background: var(--charcoal);
-    border: 1px solid transparent;
-    border-radius: 0;
-    opacity: 1;
-    transition: width 380ms cubic-bezier(.22, 1, .36, 1), height 380ms ease, top 380ms ease, opacity 380ms ease;
   }
   .barber-site .header-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; }
   .header-inner > .brand-name { justify-self: start; }
@@ -393,3 +377,17 @@ h2 span { color: var(--muted-foreground); }
   .signature-strip .container { gap: 8px; font-size: 7px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* The hero continues underneath the transparent header and demo notice. */
+.barber-site > .demo-banner { position: absolute; top: 0; left: 0; right: 0; z-index: 20; background: rgb(20 19 17 / 65%); }
+.barber-site .site-header { background: transparent; padding-top: 34px; margin-bottom: -124px; }
+.barber-site .hero,
+.barber-site .hero-inner { min-height: max(650px, 100svh); }
+.barber-site .hero-inner { padding-top: 166px; padding-bottom: 100px; }
+@media (max-width: 760px) {
+  .barber-site .site-header { padding-top: 40px; margin-bottom: -117px; }
+  .barber-site .mobile-nav { position: absolute; top: 100%; left: 0; right: 0; background: var(--charcoal); }
+  .barber-site .hero,
+  .barber-site .hero-inner { min-height: max(720px, 100svh); }
+  .barber-site .hero-inner { padding-top: 160px; padding-bottom: 110px; }
+}
