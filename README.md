@@ -1,24 +1,36 @@
-# Ashraf’s HQ Concept
+# Ashraf's HQ — Membership Lab & Client Portal Concept
 
-Build a polished, responsive single-page demo website for 'Ashraf’s HQ Barbershop' in Northpine, Cape Town, intended ONLY as a speculative sales concept, not a real commissioned official website. Use sleek premium barber aesthetic (charcoal, cream, warm brass), bold hero, tasteful barber-themed visuals using safe stock/free imagery or CSS design (do not invent customer photos). Clear navigation Services, Why Us, Gallery/Look, Location, Book. Book Now CTAs link to existing public booking page https://ashrafshqbarbershop.setmore.com/ and open in new tab. Text mentions Northpine Shopping Centre, Cape Town, and highlights easy online booking, men's grooming. Do NOT invent opening hours, service prices, reviews, ownership biographies, logos, customer testimonials, or address details beyond Northpine Shopping Centre; if price list or hours useful label 'View current services and prices on Setmore'. Prominently but tastefully add an unobtrusive banner 'Unofficial demo concept — not affiliated with Ashraf’s HQ Barbershop' to prevent misrepresentation. Make it feel like a real agency pitch demo, excellent mobile first design with subtle motion, clear CTA, accessible contrast. No backend and no submission of personal data. Fully build and verify it compiles.
+A full-stack web application and gated client portal prototype designed as a speculative digital transformation concept for Ashraf's HQ Barbershop in Northpine, Cape Town.
 
-This project was built with [Lovable](https://lovable.dev).
+🔗 **Live Prototype:** [ashraf-membership-lab.ascend-web...](https://ashrafshqbarbershop.setmore.com/) *(See repository link for deployed Cloudflare preview)*
 
-## Build with Lovable
+## Architectural Overview & Features
+What started as a responsive front-end pitch concept was expanded into a full-stack architecture featuring persistent state and gated client authentication:
+* **Frontend Framework:** Built with **TypeScript**, **React**, and **TanStack Start** (`Vite`) for fast, mobile-first rendering.
+* **Database & Edge Persistence:** Integrated **Cloudflare D1** and **Supabase** SQL migrations to support a gated client portal and preserve activated login settings across deployments.
+* **External Booking Integration:** Connects seamlessly with existing Setmore scheduling endpoints while maintaining a custom branded user experience.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/68f25512-aaa5-4aa5-bbb5-a93fa38902b1).
+## AI-Assisted Engineering & Guardrails
+This project was accelerated using AI development workflows (Lovable & custom `AGENTS.md` rules) with strict engineering constraints applied during prompting and iteration:
+* **Zero-Hallucination Guardrails:** Strictly constrained generation to prevent fabricated business data (no invented service prices, operating hours, customer testimonials, or unverified address details), routing dynamic pricing lookups directly to verified Setmore endpoints.
+* **Ethical Transparency:** Built-in UI disclaimers clearly label the deployment as an unofficial speculative concept to prevent user misrepresentation.
+* **Agentic Workflow (`AGENTS.md`):** Defined clear repository context and architectural boundaries so AI coding assistants maintain database schema consistency across 37+ iterative commits.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## Local Development
 
-## Development
+Ensure you have **Node.js** or **Bun** installed locally.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+```bash
+# Clone the repository
+git clone [https://github.com/Sevano-Forex/ashraf-s-hq-concept.git](https://github.com/Sevano-Forex/ashraf-s-hq-concept.git)
+cd ashraf-s-hq-concept
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+# Install dependencies
+bun install
+# or: npm install
+
+# Copy environment variables template
+cp .env.example .env
+
+# Run the development server
 npm run dev
-```
